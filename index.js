@@ -1,4 +1,4 @@
-import express, { urlencoded } from 'express';
+import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import UsersRoute from './app/routes/UsersRoute.js';
@@ -25,7 +25,7 @@ const port = process.env.APP_PORT || 8000;
 // Middleware
 app.use(cors());
 app.use(express.json());
-app.use(urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Route
 app.use(UsersRoute);
