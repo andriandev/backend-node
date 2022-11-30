@@ -27,7 +27,9 @@ export const isLoggedIn = async (req, res, next) => {
         req.isLoggedIn = true;
         req.isRole = dataUser?.role;
       } else {
-        res.status(401).json({ status: 401, data: 'Access unauthorized' });
+        return res
+          .status(401)
+          .json({ status: 401, data: 'Access unauthorized, user not found' });
       }
 
       next();
@@ -44,10 +46,10 @@ export const isLoggedIn = async (req, res, next) => {
       } else if (nameError == 'NotBeforeError') {
         message = 'Token not active';
       }
-      res.status(400).json({ status: 400, data: message });
+      return res.status(400).json({ status: 400, data: message });
     }
   } else {
-    res.status(401).json({ status: 401, data: 'Access unauthorized' });
+    return res.status(401).json({ status: 401, data: 'Access unauthorized' });
   }
 };
 
@@ -56,6 +58,8 @@ export const isAdmin = (req, res, next) => {
   if (req?.isLoggedIn && req?.isRole == 'admin') {
     next();
   } else {
-    res.status(403).json({ status: 403, data: 'Access denied, admin only' });
+    return res
+      .status(403)
+      .json({ status: 403, data: 'Access denied, admin only' });
   }
 };
